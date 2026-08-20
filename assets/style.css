@@ -99,6 +99,15 @@ section{margin-bottom:2.6rem;}
   padding:1.4rem 1.6rem;margin-bottom:1.2rem;
 }
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.card-list{list-style:none;padding:0;margin:.7rem 0 1rem;}
+.card-list li{
+  position:relative;padding-left:1.1em;margin-bottom:.4em;
+  font-size:.92rem;color:var(--ink-soft);
+}
+.card-list li::before{
+  content:'';position:absolute;left:0;top:.5em;width:6px;height:6px;border-radius:50%;
+  background:var(--amber);
+}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 @media (max-width:700px){.grid-3,.grid-2{grid-template-columns:1fr;}}
 
@@ -192,3 +201,114 @@ footer.site-footer a:hover{color:var(--teal);}
 .mini-topic{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.2rem;}
 .mini-topic .mini-text h4{margin:0 0 .3em;color:var(--navy);}
 .mini-topic .mini-text p{margin:0;color:var(--ink-soft);font-size:.95rem;}
+
+/* ---------- Career trajectory (About page) — timeline with year markers ---------- */
+.traj-legend{display:flex;gap:1.4rem;flex-wrap:wrap;font-size:.85rem;color:var(--ink-soft);margin:.6rem 0 1.4rem;}
+.dot-legend{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.45em;vertical-align:middle;}
+.dot-legend.edu{background:var(--navy);}
+.dot-legend.industry{background:var(--amber);}
+
+.dual-timeline{position:relative;margin:0 0 1rem;}
+
+/* --- Segment A: dual column, centered spine (education years) --- */
+.tl-segment-dual{position:relative;}
+.tl-segment-dual::before{
+  content:'';position:absolute;left:50%;top:6px;bottom:6px;width:2px;
+  background:var(--line);transform:translateX(-50%);
+}
+.tl-row{
+  position:relative;display:grid;grid-template-columns:1fr 30px 1fr;
+  align-items:start;margin-bottom:1.3rem;
+}
+.tl-node-col{grid-column:2;display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;}
+.tl-node{
+  width:14px;height:14px;border-radius:50%;background:var(--teal);
+  margin-top:8px;border:3px solid var(--paper);
+}
+.tl-year{font-size:.68rem;color:var(--ink-soft);font-weight:700;margin-top:3px;white-space:nowrap;}
+.tl-side{min-width:0;}
+.tl-left{grid-column:1;padding-right:22px;}
+.tl-right{grid-column:3;padding-left:22px;}
+
+/* elbow connector from box toward the central spine */
+.tl-left .tl-item::before{
+  content:'';position:absolute;top:16px;right:-22px;width:22px;height:16px;
+  border-top:2px solid var(--line);border-right:2px solid var(--line);
+  border-top-right-radius:12px;
+}
+.tl-right .tl-item::before{
+  content:'';position:absolute;top:16px;left:-22px;width:22px;height:16px;
+  border-top:2px solid var(--line);border-left:2px solid var(--line);
+  border-top-left-radius:12px;
+}
+
+/* --- Curve: spine bends from center to left as education ends --- */
+.tl-curve{position:relative;height:64px;margin:-.2rem 0 .2rem;}
+.tl-curve svg{width:100%;height:100%;display:block;overflow:visible;}
+.tl-curve path{fill:none;stroke:var(--line);stroke-width:2;}
+.tl-curve-label{
+  position:absolute;left:calc(8% + 14px);top:50%;transform:translateY(-50%);
+  font-size:.75rem;color:var(--ink-soft);font-style:italic;white-space:nowrap;
+}
+
+/* --- Segment B: single column, left spine (career-only years) --- */
+.tl-segment-single{position:relative;padding-top:.2rem;}
+.tl-segment-single::before{
+  content:'';position:absolute;left:8%;top:0;bottom:6px;width:2px;background:var(--line);
+}
+.tl-row-single{position:relative;padding-left:calc(8% + 22px);margin-bottom:1.2rem;min-height:14px;}
+.tl-node-s{
+  position:absolute;left:8%;top:16px;width:14px;height:14px;border-radius:50%;
+  background:var(--amber);border:3px solid var(--paper);transform:translateX(-50%);z-index:2;
+}
+.tl-year-s{
+  position:absolute;left:8%;top:-4px;transform:translateX(-50%);
+  font-size:.68rem;font-weight:700;color:var(--ink-soft);white-space:nowrap;
+  background:var(--paper);padding:0 4px;
+}
+.tl-row-single::after{
+  content:'';position:absolute;left:8%;top:22px;width:calc(22px);height:2px;background:var(--line);
+}
+
+/* --- Shared item / box styling --- */
+.tl-item{position:relative;border:none;}
+.tl-item summary{
+  list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:.15rem;
+  padding:.7rem .9rem;background:#fff;border-radius:8px;
+  border:1px solid var(--line);border-left:4px solid var(--teal);
+}
+.tl-item.edu summary{border-left-color:var(--navy);}
+.tl-item.industry summary{border-left-color:var(--amber);}
+.tl-item summary::-webkit-details-marker{display:none;}
+.tl-item[open] summary{border-bottom-left-radius:0;border-bottom-right-radius:0;}
+.tl-item .traj-body{
+  background:#fff;border:1px solid var(--line);border-top:none;border-radius:0 0 8px 8px;
+  padding:.8rem 1rem .2rem;
+}
+
+.traj-title{font-weight:700;color:var(--navy);display:block;}
+.traj-org{color:var(--ink-soft);font-style:italic;font-size:.85rem;display:block;}
+.traj-date-row{display:flex;align-items:center;gap:.5rem;margin-top:.1rem;}
+.traj-date{color:var(--teal);font-size:.78rem;font-weight:600;white-space:nowrap;}
+.dur-bar{display:inline-block;height:5px;min-width:6px;border-radius:3px;background:var(--line);}
+.tl-item.edu .dur-bar{background:var(--navy);opacity:.5;}
+.tl-item.industry .dur-bar{background:var(--amber);opacity:.6;}
+.dur-bar.ongoing{background-image:repeating-linear-gradient(90deg,currentColor 0 4px,transparent 4px 7px);opacity:.7;}
+.traj-body p,.traj-body ul{color:var(--ink-soft);font-size:.92rem;}
+
+@media (max-width:680px){
+  .tl-segment-dual::before{left:7px;}
+  .tl-row{grid-template-columns:1fr;margin-bottom:.8rem;}
+  .tl-node-col{display:none;}
+  .tl-left,.tl-right{grid-column:1;padding-left:20px;padding-right:0;}
+  .tl-left:empty,.tl-right:empty{display:none;}
+  .tl-left .tl-item::before,.tl-right .tl-item::before{display:none;}
+
+  .tl-curve{display:none;}
+
+  .tl-segment-single::before{left:7px;}
+  .tl-row-single{padding-left:26px;}
+  .tl-node-s{left:7px;}
+  .tl-year-s{left:7px;}
+  .tl-row-single::after{left:7px;width:14px;}
+}

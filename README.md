@@ -13,6 +13,8 @@ site/
     from-academia-to-industry.html   (starter post)
   assets/
     style.css
+    images/    (profile photo, banner, research figures)
+    docs/      (PhD thesis PDF)
 ```
 
 ## Editing content
